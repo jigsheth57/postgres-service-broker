@@ -1,0 +1,68 @@
+spring:
+  profiles:
+    active: docker
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  security:
+    user:
+      name: admin
+      password: pivotal
+      roles: USER, ADMIN
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:hsqldb:mem:broker-db
+    username: sa
+    password:
+
+postgres:
+  instance:
+    hostname: 127.0.0.1
+    port: 5432
+
+---
+spring:
+  profiles: docker
+  datasource:
+    url: jdbc:postgresql://192.168.99.100:5432/broker-db
+    username: brokeradmin
+    password: pivotal
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    # Disable feature detection by this undocumented parameter. Check the org.hibernate.engine.jdbc.internal.JdbcServiceImpl.configure method for more details.
+    properties.hibernate.temp.use_jdbc_metadata_defaults: false
+    # Because detection is disabled you have to set correct dialect by hand.
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+
+postgres:
+  instance:
+    hostname: 192.168.99.100
+    port: 5432
+---
+spring:
+  profiles: cloud
+  datasource:
+    url: jdbc:postgresql://postgres-postgresql.default.svc.cluster.local:5432/broker-db
+    username: brokeradmin
+    password: pivotal
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    # Disable feature detection by this undocumented parameter. Check the org.hibernate.engine.jdbc.internal.JdbcServiceImpl.configure method for more details.
+    properties.hibernate.temp.use_jdbc_metadata_defaults: false
+    # Because detection is disabled you have to set correct dialect by hand.
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+
+postgres:
+  instance:
+    hostname: postgres-postgresql.default.svc.cluster.local
+    port: 5432
