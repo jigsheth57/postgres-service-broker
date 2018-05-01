@@ -41,7 +41,7 @@ public class ServiceCatalogConfiguration {
 				.tags("postgres")
 				.plans(plan)
 				.metadata("displayName", "PostgresSQL")
-				.metadata("imageUrl","/images/postgres.png")
+				.metadata("imageUrl","https://raw.githubusercontent.com/jigsheth57/postgres-service-broker/master/src/main/resources/public/images/postgres.png")
 				.metadata("longDescription", "A simple postgres service")
 				.metadata("providerDisplayName", "PostgreSQL")
 				.metadata("documentationUrl","https://github.com/jigsheth57/postgres-service-broker")

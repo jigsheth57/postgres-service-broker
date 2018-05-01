@@ -1,0 +1,13 @@
+---
+defaults: &defaults
+  buildpack: java_buildpack_offline
+  memory: 1G
+  instances: 1
+  env:
+    TRUST_CERTS: api.sys.gcp.pcfapps.org
+    SPRING_PROFILES_ACTIVE: cloud
+
+applications:
+  - name: postgres-broker
+    path: target/postgres-service-broker-1.0.0.jar
+    <<: *defaults

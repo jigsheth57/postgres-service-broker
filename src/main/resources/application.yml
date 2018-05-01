@@ -52,7 +52,7 @@ postgres:
 spring:
   profiles: cloud
   datasource:
-    url: jdbc:postgresql://postgres-postgresql.default.svc.cluster.local:5432/broker-db
+    url: jdbc:postgresql://35.193.240.25:5432/broker-db
     username: brokeradmin
     password: pivotal
     driver-class-name: org.postgresql.Driver
@@ -64,5 +64,5 @@ spring:
 
 postgres:
   instance:
-    hostname: postgres-postgresql.default.svc.cluster.local
+    hostname: 35.193.240.25
     port: 5432

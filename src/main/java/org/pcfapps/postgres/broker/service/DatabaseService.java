@@ -44,8 +44,8 @@ public class DatabaseService {
 
     public boolean createRoleForInstance (String instanceId, String userid, String passwd) {
         try {
-            jdbcTemplate.execute("CREATE USER \""+userid+"\" WITH LOGIN password '"+passwd+"'");
-            jdbcTemplate.execute("ALTER DATABASE \"" + instanceId + "\" OWNER TO \"" + userid + "\"");
+            jdbcTemplate.execute("CREATE USER \""+userid+"\" WITH LOGIN INHERIT password '"+passwd+"'");
+            jdbcTemplate.execute("GRANT \""+dbadmin+"\" to \""+userid+"\"");
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
@@ -54,8 +54,7 @@ public class DatabaseService {
 
     public boolean deleteRoleForInstance (String instanceId, String userid) {
         try {
-            jdbcTemplate.execute("ALTER DATABASE \"" + instanceId + "\" OWNER TO \"" + dbadmin + "\"");
-            jdbcTemplate.execute("DROP USER IF EXISTS \""+userid+"\"");
+            jdbcTemplate.execute("ALTER ROLE \""+userid+"\" NOLOGIN");
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
